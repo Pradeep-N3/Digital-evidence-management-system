@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Digital Evidence & Case Management System (DECMS)
 
 [![Forensic Integrity](https://img.shields.io/badge/Forensic%20Integrity-SHA--256%20Verified-06b6d4)](https://github.com)
@@ -92,3 +93,7 @@ npm run dev
 - `GET /api/dashboard/stats` — Metrics, integrity health meter, and activity feed
 - `GET /api/audit/logs` — Comprehensive security and administrative logs
 - `GET /api/audit/validate-all` — Cryptographically walk and validate all custody chains
+=======
+# Digital-evidence-management-system
+An object-oriented digital evidence and case management system developed as a java mini-project.
+>>>>>>> 11966c2c2dd5c2b953530420d2783952a1dd02f6
