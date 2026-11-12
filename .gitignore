@@ -1,0 +1,18 @@
+# Maven
+backend/target/
+backend/*.log
+backend/decms-db*
+backend/vault/
+
+# Node
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+frontend/*.log
+
+# IDE & OS
+.idea/
+.vscode/
+*.class
+.DS_Store
+Thumbs.db
