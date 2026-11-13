@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.nio.file.Path;
 import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
@@ -154,7 +155,14 @@ public class EvidenceService {
                 String.format("Evidence file '%s' downloaded by %s", e.getFileName(), accessor.getUsername())
         );
 
-        return storageService.loadFileAsResource(e.getStoredFilePath());
+        // Auto-heal storedFilePath if it points to an old/moved location
+        Path resolvedPath = storageService.resolveStoredFilePath(e.getStoredFilePath());
+        if (!resolvedPath.toString().equals(e.getStoredFilePath())) {
+            e.setStoredFilePath(resolvedPath.toString());
+            evidenceRepository.save(e);
+        }
+
+        return storageService.loadFileAsResource(resolvedPath.toString());
     }
 
     @Transactional

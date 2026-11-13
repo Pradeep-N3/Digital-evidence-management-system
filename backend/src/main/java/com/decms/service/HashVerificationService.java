@@ -11,6 +11,7 @@ import com.decms.repository.IntegrityLogRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.nio.file.Path;
 import java.time.LocalDateTime;
 
 @Service
@@ -36,7 +37,12 @@ public class HashVerificationService {
 
     @Transactional
     public EvidenceDTO.IntegrityCheckResponseDTO verifyEvidence(Evidence evidence, User verifier) {
-        String physicalHash = storageService.computeFileSha256(evidence.getStoredFilePath());
+        Path resolvedPath = storageService.resolveStoredFilePath(evidence.getStoredFilePath());
+        if (!resolvedPath.toString().equals(evidence.getStoredFilePath())) {
+            evidence.setStoredFilePath(resolvedPath.toString());
+        }
+
+        String physicalHash = storageService.computeFileSha256(resolvedPath);
         boolean isMatch = evidence.verifyIntegrity(physicalHash);
 
         evidenceRepository.save(evidence);
